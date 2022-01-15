@@ -1,1 +1,2 @@
 yfinance ~= 0.1.69
+openpyxl ~= 3.0.9

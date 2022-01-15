@@ -66,6 +66,6 @@ public class DownloadTableModel extends AbstractTableModel {
         downloadTable.getColumnModel().getColumn(1).setMinWidth(defaultTickerWidth);
         downloadTable.getColumnModel().getColumn(1).setMaxWidth(defaultTickerWidth);
         downloadTable.getColumnModel().getColumn(2).setPreferredWidth(defaultNameWidth);
-//        downloadTable.getColumnModel().getColumn(2).setMinWidth(defaultNameWidth);
+        downloadTable.getColumnModel().getColumn(2).setMinWidth(defaultNameWidth);
     }
 }

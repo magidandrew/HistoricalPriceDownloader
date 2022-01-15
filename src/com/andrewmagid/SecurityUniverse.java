@@ -14,6 +14,7 @@ public class SecurityUniverse {
 
     private static ArrayList<Security> masterFundList;
     public static ArrayList<Security> fundList;
+    public static int selectedCount;
 
 
     public static class Security implements Comparable<Security> {
@@ -31,6 +32,10 @@ public class SecurityUniverse {
 
         public void toggleSelected() {
             selected = !selected;
+            if (selected)
+                selectedCount += 1;
+            else
+                selectedCount -= 1;
         }
 
         @Override
