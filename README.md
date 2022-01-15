@@ -2,18 +2,19 @@
 
 Simplifies downloading historical price data from Yahoo Finance. 
 
-### Screenshot
-**INSERT HERE**
-
-### How To Run (easy)
-Download zip from [releases](https://sampleurl.com)
-
 ### Run From Source
 ```
+# setup python virtual environment and install deps
+python3 -m venv venv
+source venv/bin/activate
+pip3 install -r requirements.txt
+
+# java build
 ant run
 ```
 
 ### Dependencies
-ant
+- ant
+- pip
 
 

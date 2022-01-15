@@ -1,11 +1,13 @@
 package com.andrewmagid;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,7 +15,7 @@ import java.util.Arrays;
 public class Window extends JFrame {
     // components
     private Button generateBtn;
-    //    private Button downloadBtn;
+    private Button selectDirBtn;
     private Button selectAll;
     //    private Button deleteBtn;
     private Button searchBtn;
@@ -23,6 +25,9 @@ public class Window extends JFrame {
     private JPanel mainPanel;
     private JTable downloadTable;
     private DownloadTableModel dtm;
+    private JFrame frame;
+    private File dir;
+    private JLabel dirNameLbl;
 
     // constants
     private int SCREEN_WIDTH = 650;
@@ -30,7 +35,7 @@ public class Window extends JFrame {
 
 
     public Window() {
-        JFrame frame = new JFrame("Historical Price Downloader");
+        frame = new JFrame("Historical Price Downloader");
         mainPanel = new JPanel();
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -71,12 +76,17 @@ public class Window extends JFrame {
         btnGroup.add(csvRadio);
 
         generateBtn = new Button("Generate");
-//        downloadBtn = new Button("Download");
+        selectDirBtn = new Button("...");
 //        deleteBtn = new Button("Delete");
 
 
         JPanel southUiPanel = new JPanel(new FlowLayout());
         JPanel searchPanel = new JPanel(new FlowLayout());
+
+        Border border = BorderFactory.createLineBorder(Color.BLACK, 1);
+        dirNameLbl = new JLabel("Select Destination...");
+        dirNameLbl.setBorder(border);
+//        dirNameLbl.setEditable(false);
 
         // add to panels
         mainPanel.add(searchPanel, BorderLayout.NORTH);
@@ -87,7 +97,8 @@ public class Window extends JFrame {
         southUiPanel.add(csvRadio);
         southUiPanel.add(generateBtn);
 //        southUiPanel.add(deleteBtn);
-//        southUiPanel.add(downloadBtn);
+        southUiPanel.add(dirNameLbl);
+        southUiPanel.add(selectDirBtn);
 
         searchPanel.add(searchBar);
         searchPanel.add(searchBtn);
@@ -139,15 +150,19 @@ public class Window extends JFrame {
                     JOptionPane.showMessageDialog(null, "No Selection Made", "", JOptionPane.INFORMATION_MESSAGE);
                     return;
                 }
-                ArrayList<String> cmds = new ArrayList<>(Arrays.asList("python3", System.getProperty("user.dir")+"/src/run.py"));
-                if (excelRadio.isSelected()) {
-                    cmds.add("- e");
-                } else {
-                    cmds.add("- c");
+                if (dirNameLbl.getText().equals("")){
+                    JOptionPane.showMessageDialog(null, "Select a destination folder", "", JOptionPane.INFORMATION_MESSAGE);
+                    return;
                 }
+                ArrayList<String> cmds = new ArrayList<>(Arrays.asList(System.getProperty("user.dir")+"/venv/bin/python3", System.getProperty("user.dir")+"/src/run.py"));
+                if (excelRadio.isSelected())
+                    cmds.add("-e");
+                else
+                    cmds.add("-c");
+                cmds.add(dir.getAbsolutePath().toString());
                 for (SecurityUniverse.Security sec : SecurityUniverse.fundList) {
                     if (sec.getSelected())
-                        cmds.add(" " + sec.getTicker());
+                        cmds.add(sec.getTicker());
                 }
                 ProcessBuilder pb = new ProcessBuilder(cmds).inheritIO();
                 try {
@@ -155,6 +170,21 @@ public class Window extends JFrame {
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
+            }
+        });
+
+        selectDirBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                int option = fileChooser.showOpenDialog(frame);
+                if (option == JFileChooser.APPROVE_OPTION){
+                    dir = fileChooser.getSelectedFile();
+                    dirNameLbl.setText(dir.getAbsolutePath());
+                }
+                else
+                    System.out.println("Open command canceled");
             }
         });
     }
