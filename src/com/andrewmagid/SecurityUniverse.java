@@ -38,6 +38,14 @@ public class SecurityUniverse {
                 selectedCount -= 1;
         }
 
+        public void setSelected() {
+            selected = true;
+        }
+
+        public void setDeselected() {
+            selected = false;
+        }
+
         @Override
         public String toString() {
             return ticker + " : " + name;
