@@ -12,7 +12,7 @@ public class SecurityUniverse {
     private File otherCsv = new File("assets/otherlisted.csv");
     private String DELIMITER = "\\|";
 
-    private static ArrayList<Security> masterFundList;
+    public static ArrayList<Security> masterFundList;
     public static ArrayList<Security> fundList;
     public static int selectedCount;
 

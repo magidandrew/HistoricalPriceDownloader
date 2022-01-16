@@ -172,7 +172,7 @@ public class Window extends JFrame {
                 else
                     cmds.add("-c");
                 cmds.add(dir.getAbsolutePath().toString()+"/"+filenameField.getText());
-                for (SecurityUniverse.Security sec : SecurityUniverse.fundList) {
+                for (SecurityUniverse.Security sec : SecurityUniverse.masterFundList) {
                     if (sec.getSelected())
                         cmds.add(sec.getTicker());
                 }
@@ -180,7 +180,7 @@ public class Window extends JFrame {
                 try {
                     JFrame progressFrame = new JFrame("...Processing...");
                     progressFrame.setLayout(new BorderLayout());
-                    progressFrame.setPreferredSize(new Dimension(150,75));
+                    progressFrame.setPreferredSize(new Dimension(200,75));
                     progressFrame.pack();
                     progressFrame.setLocationRelativeTo(null);
                     progressFrame.setVisible(true);
