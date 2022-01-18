@@ -170,7 +170,7 @@ public class Window extends JFrame {
 //                ArrayList<String> cmds = new ArrayList<>(Arrays.asList(System.getProperty("user.dir") + "/venv/bin/python3", System.getProperty("user.dir") + "/src/run.py"));
                 ArrayList<String> cmds = new ArrayList<>();
                 if (System.getProperty("os.name").startsWith("Windows")) {
-                    cmds.add(System.getProperty("user.dir") + "\\venv\\Scrips\\python.exe");
+                    cmds.add(System.getProperty("user.dir") + "\\venv\\Scripts\\python.exe");
                     cmds.add(System.getProperty("user.dir")+"\\src\\run.py");
                 }
                 else if (System.getProperty("os.name").startsWith("Mac OS X")) {
