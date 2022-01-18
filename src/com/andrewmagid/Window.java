@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -166,7 +167,16 @@ public class Window extends JFrame {
                     JOptionPane.showMessageDialog(null, "Declare output filename.", "Filename Warning", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
-                ArrayList<String> cmds = new ArrayList<>(Arrays.asList(System.getProperty("user.dir") + "/venv/bin/python3", System.getProperty("user.dir") + "/src/run.py"));
+//                ArrayList<String> cmds = new ArrayList<>(Arrays.asList(System.getProperty("user.dir") + "/venv/bin/python3", System.getProperty("user.dir") + "/src/run.py"));
+                ArrayList<String> cmds = new ArrayList<>();
+                if (System.getProperty("os.name").startsWith("Windows")) {
+                    cmds.add(System.getProperty("user.dir") + "\\venv\\Scrips\\python.exe");
+                    cmds.add(System.getProperty("user.dir")+"\\src\\run.py");
+                }
+                else if (System.getProperty("os.name").startsWith("Mac OS X")) {
+                    cmds.add(System.getProperty("user.dir") + "/venv/bin/python3");
+                    cmds.add(System.getProperty("user.dir") + "/src/run.py");
+                }
                 if (excelRadio.isSelected())
                     cmds.add("-e");
                 else
