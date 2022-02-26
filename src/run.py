@@ -3,6 +3,7 @@ import yfinance as yf
 import pandas as pd
 from functools import reduce
 
+# usage: python3 run.py <output_filename> (-e,-c) [ticker1, ticker2...]
 
 args: list[str] = [x for x in sys.argv if x != sys.argv[0]]
 
